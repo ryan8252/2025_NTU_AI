@@ -22,6 +22,8 @@ all_preds, all_refs = [], []
 first_five = []
 
 for i, data in tqdm(enumerate(dataset), total=len(dataset)):
+    # if i >= 10:
+    #     break
 
     img_data = data["image"]
     if isinstance(img_data, str):

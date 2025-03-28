@@ -51,7 +51,7 @@ def get_person_description(image: Image.Image) -> str:
 
     generate_ids = phi4_model.generate(
         **inputs,
-        max_new_tokens=45,
+        max_new_tokens=50,
         generation_config=phi4_gen_config
     )
     generate_ids = generate_ids[:, inputs['input_ids'].shape[1]:]
@@ -83,9 +83,11 @@ with open(prompt_log_path, "w", encoding="utf-8") as logf:
             content_description = get_person_description(image)
 
             # Step 2: 組合完整 multi-section prompt，並強制裁切
-            style_description = "a cartoon character in Peanuts comic style, flat colors, thick outlines, simple shapes, cute and minimalist"
-            full_prompt = f"content: {content_description} style: {style_description}"
+            style_description = "Peanuts comic style"
+            # style_description = "a cartoon character in Peanuts comic style, flat colors, thick outlines, simple shapes, cute and minimalist"
 
+            full_prompt = f"content: {content_description} style: {style_description}"
+            #防止token數超過上限
             max_total_tokens = 77
             while True:
                 tokenized = sd3_pipe.tokenizer(full_prompt, return_tensors=None)

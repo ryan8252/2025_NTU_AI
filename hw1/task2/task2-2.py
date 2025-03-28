@@ -8,11 +8,11 @@ from transformers import (
 from diffusers import AutoPipelineForImage2Image
 
 # === 使用者設定 ===
-test_mode = True
+test_mode = False
 max_images = 3 if test_mode else 100
 
 input_dir = "./content_image"
-output_dir = "./output2-2"
+output_dir = "./output2-2"  
 os.makedirs(output_dir, exist_ok=True)
 
 # === 載入 Phi-4 ===
@@ -29,7 +29,7 @@ phi4_gen_config = GenerationConfig.from_pretrained(phi4_model_path)
 
 # === 載入 SD v1-5 (AutoPipeline) ===
 pipe = AutoPipelineForImage2Image.from_pretrained(
-    "stabilityai/stable-diffusion-v1-5",
+    "sd-legacy/stable-diffusion-v1-5",
     torch_dtype=torch.float16,
     variant="fp16",
     safety_checker=None,
@@ -46,7 +46,8 @@ assistant_prompt = "<|assistant|>"
 prompt_suffix = "<|end|>"
 
 # ✅ Snoopy 風格描述（精簡版）
-style_description = "a cartoon character in Peanuts comic style, flat colors, thick outlines, simple shapes, cute and minimalist"
+# style_description = "a cartoon character in Peanuts comic style, flat colors, thick outlines, simple shapes, cute and minimalist"
+style_description = "Peanuts comic style"
 
 # === Step 1: 用 Phi-4 描述人像特徵 ===
 def get_person_description(image: Image.Image) -> str:

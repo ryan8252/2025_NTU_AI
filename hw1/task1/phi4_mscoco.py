@@ -36,7 +36,7 @@ first_five = []
 
 with torch.no_grad():
     for i, data in tqdm(enumerate(dataset), total=len(dataset)):
-        # if i >= 10:
+        # if i >= 1:
         #     break
 
         img_data = data["image"]
